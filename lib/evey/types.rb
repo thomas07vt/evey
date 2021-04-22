@@ -1,0 +1,2 @@
+module Evey::Types
+end
