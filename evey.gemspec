@@ -25,13 +25,17 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "kix"
   spec.add_dependency "activejob"
   spec.add_dependency "activerecord"
   spec.add_dependency "activesupport"
-  spec.add_dependency "kix"
 
-  spec.add_development_dependency "rspec"
   spec.add_development_dependency "pry"
-  spec.add_development_dependency "standard"
+  spec.add_development_dependency "rails"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec-rails"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "standard"
+  spec.add_development_dependency "pg"
+  spec.add_development_dependency "factory_bot_rails"
 end

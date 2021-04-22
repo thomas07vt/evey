@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 RSpec.describe Evey::Event, type: :model do
   class SpecEveyEventClass < Evey::Event
