@@ -79,4 +79,43 @@ RSpec.describe Evey::Event, type: :model do
       end
     end
   end
+
+  describe ".data_attributes" do
+    it "adds accessors on the event object" do
+      event = SpecEveyEventClass.new(name: "event_name")
+      expect(event.name).to eq("event_name")
+      event.name = "New Name"
+      expect(event.name).to eq("New Name")
+    end
+  end
+
+  describe ".request_hook" do
+    class SpecRequestHookEventClass < Evey::Event
+      request_hook { |event| puts event.name }
+    end
+
+    it "sets the request_hook proc" do
+      event = SpecRequestHookEventClass.new
+      expect(event.request_hook).to be_a(Proc)
+    end
+  end
+
+  describe "#data" do
+    it "returns the data attributes for the event" do
+      event = SpecEveyEventClass.new(name: "event_name")
+      expect(event.data).to eq({"name"=>"event_name"})
+    end
+  end
+
+  describe "#attribute_was_set?" do
+    it "returns true when the attribute was set" do
+      event = SpecEveyEventClass.new(name: "event_name")
+      expect(event.name_was_set?).to eq(true)
+    end
+
+    it "return false when the attribute was not set" do
+      event = SpecEveyEventClass.new
+      expect(event.name_was_set?).to eq(false)
+    end
+  end
 end

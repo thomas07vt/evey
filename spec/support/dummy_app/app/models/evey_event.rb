@@ -1,2 +1,2 @@
-class EveyEvent < ApplicationRecord
+class EveyEvent < Evey::Event
 end
