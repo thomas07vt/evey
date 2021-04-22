@@ -10,3 +10,4 @@
 # rspec failure tracking
 .rspec_status
 evey-*.gem
+spec/support/dummy_app/log/**/*.log
