@@ -64,8 +64,7 @@ class Evey::Dispatcher
       reactors = ReactorSet.new
 
       @rules.each do |event_class, rule|
-        # Match event by class including ancestors. e.g. All events match a role for BaseEvent.
-        if event.is_a?(event_class)
+        if event.class == event_class
           reactors.add_sync rule.sync
           reactors.add_async rule.async
         end
