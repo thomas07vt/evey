@@ -10,6 +10,9 @@ require "active_record"
 require "active_support"
 require "active_support/core_ext/object/json.rb"
 
+require 'rails/generators'
+require 'rails/generators/migration'
+
 require "evey/types.rb"
 require "evey/types/association.rb"
 require "evey/event_serializer.rb"
