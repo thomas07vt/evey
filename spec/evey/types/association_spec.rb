@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe Evey::Types::Association do
   describe "#deserialize" do
     it "converts the hash global ids to objects" do
-      event = EveyEvent.create!
+      event = DummyEvent.create!
       hash = { "event" => event.to_global_id.to_s }
       result = Evey::Types::Association.new.deserialize(hash)
 
@@ -20,7 +20,7 @@ RSpec.describe Evey::Types::Association do
 
   describe "#serialize" do
     it "converts hash to json with global ids" do
-      event = EveyEvent.create!
+      event = DummyEvent.create!
       hash = { "event" => event }
       result = Evey::Types::Association.new.serialize(hash)
 

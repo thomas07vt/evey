@@ -1,4 +1,4 @@
-class CreateEveyEvents < ActiveRecord::Migration[6.1]
+class CreateEveyEvents < ActiveRecord::Migration::Current
   def change
     create_table :evey_events do |t|
       t.string :type, null: false
@@ -10,5 +10,7 @@ class CreateEveyEvents < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :evey_events, :user_id
   end
 end

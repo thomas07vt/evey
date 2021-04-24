@@ -1,26 +1,6 @@
 require "spec_helper"
 
 RSpec.describe Evey::Dispatcher do
-  class RspecConfigReactor < Evey::Reactor
-    class << self
-      attr_accessor :was_hit
-    end
-
-    def call
-      self.class.was_hit = true
-    end
-  end
-
-  class RspecConfigReactorAsync < Evey::Reactor
-    class << self
-      attr_accessor :was_hit
-    end
-
-    def call
-      self.class.was_hit = true
-    end
-  end
-
   describe ".enable!" do
     it "enables the dispatcher" do
       described_class.enable!
@@ -40,28 +20,31 @@ RSpec.describe Evey::Dispatcher do
 
     it "allows configuration of the dispatcher" do
       dispatcher.configure do |config|
-        config.on EveyEvent, sync: RspecConfigReactor, async: RspecConfigReactorAsync
+        config.on DummyEvent, sync: SyncReactor, async: AsyncReactor
       end
 
-      reactors = dispatcher.rules.for(EveyEvent.new)
-      expect(reactors.sync.to_a).to eq([RspecConfigReactor])
-      expect(reactors.async.to_a).to eq([RspecConfigReactorAsync])
+      reactors = dispatcher.rules.for(DummyEvent.new)
+      expect(reactors.sync.to_a).to eq([SyncReactor])
+      expect(reactors.async.to_a).to eq([AsyncReactor])
     end
   end
 
   describe ".dispatch" do
     let(:dispatcher) {  Class.new(Evey::Dispatcher) }
-    let(:event) { EveyEvent.create! }
+    let(:event) { DummyEvent.create! }
 
     before do
+      allow(SyncReactor).to receive(:call)
+      allow(AsyncReactor).to receive(:call)
       dispatcher.configure do |config|
-        config.on EveyEvent, sync: RspecConfigReactor, async: RspecConfigReactorAsync
+        config.on DummyEvent, sync: SyncReactor, async: AsyncReactor
       end
     end
 
     it "dispatches the event to sync reactors" do
       dispatcher.dispatch(event)
-      expect(RspecConfigReactor.was_hit).to eq(true)
+      expect(SyncReactor).to have_received(:call).with(event)
+      expect(AsyncReactor).not_to have_received(:call).with(event)
     end
 
     it "enqueues reactor jobs for async reactors" do
