@@ -118,4 +118,17 @@ RSpec.describe Evey::Event, type: :model do
       expect(event.name_was_set?).to eq(false)
     end
   end
+
+  describe ".uuid" do
+    it "generates a uuid if not is provided" do
+      event = SpecEveyEventClass.create!(name: "test")
+      expect(event.uuid).to be_present
+    end
+
+    it "allows the event to be created with a uuid" do
+      uuid = SecureRandom.uuid
+      event = SpecEveyEventClass.create!(name: "test", uuid: uuid)
+      expect(event.uuid).to eq(uuid)
+    end
+  end
 end

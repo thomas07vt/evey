@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2021_04_24_171137) do
 
   create_table "evey_events", force: :cascade do |t|
     t.string "type", null: false
+    t.uuid "uuid"
     t.bigint "user_id"
     t.jsonb "data"
     t.jsonb "metadata"
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 2021_04_24_171137) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_evey_events_on_user_id"
+    t.index ["uuid"], name: "index_evey_events_on_uuid"
   end
 
   create_table "orgs", force: :cascade do |t|

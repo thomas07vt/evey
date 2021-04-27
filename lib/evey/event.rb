@@ -129,6 +129,8 @@ class Evey::Event < ActiveRecord::Base
   private
 
   def apply_and_persist
+    self.uuid ||= SecureRandom.uuid
+
     aggregates.values.map(&:lock!)
     apply
     aggregates.map do |name, aggregate|
