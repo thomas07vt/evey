@@ -1,5 +1,5 @@
 class Evey::EventSerializer < Kix::Serializer
-  attributes :type, :data, :metadata, :aggregates, :associations,
+  attributes :id, :type, :data, :metadata, :aggregates, :associations,
     :created_at, :updated_at, :errors
 
   def errors
